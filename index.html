@@ -1,0 +1,1005 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio</title>
+
+  <style>
+    :root{
+      --bg: #f7fbff;
+      --bg2: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --line: #e6eef7;
+      --card: rgba(255,255,255,0.92);
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+      --pill: rgba(0, 173, 255, 0.12);
+      --accent: #00a8ff;
+      --accent2: #0ea5e9;
+      --chip: rgba(2, 132, 199, 0.10);
+      --chipText: #075985;
+      --radius: 18px;
+    }
+
+    [data-theme="dark"]{
+      --bg: #07101c;
+      --bg2: #0b1526;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --line: rgba(148,163,184,0.18);
+      --card: rgba(11,21,38,0.78);
+      --shadow: 0 10px 30px rgba(0,0,0,0.40);
+      --pill: rgba(56,189,248,0.14);
+      --accent: #38bdf8;
+      --accent2: #22d3ee;
+      --chip: rgba(56,189,248,0.14);
+      --chipText: #bae6fd;
+    }
+
+    *{ box-sizing: border-box; }
+    html{ scroll-behavior: smooth; }
+    body{
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 18%, rgba(14,165,233,0.18) 0 2px, transparent 3px) 0 0/120px 120px,
+        radial-gradient(circle at 68% 58%, rgba(14,165,233,0.14) 0 2px, transparent 3px) 0 0/140px 140px,
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      min-height: 100vh;
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+
+    .layout{
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 28px;
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 28px 20px 80px;
+    }
+
+    /* Sidebar */
+    .side{
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      height: fit-content;
+      padding: 10px 6px;
+    }
+
+    .nav{
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      position: relative;
+    }
+
+    .nav::before{
+      content:"";
+      position: absolute;
+      left: 16px;
+      top: 14px;
+      bottom: 14px;
+      width: 2px;
+      background: linear-gradient(180deg, transparent, var(--line), transparent);
+      border-radius: 2px;
+    }
+
+    .nav a{
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: rgba(100,116,139,0.95);
+    }
+
+    .dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(148,163,184,0.35);
+      border: 2px solid rgba(148,163,184,0.20);
+      margin-left: 10px;
+    }
+
+    .nav a.active{
+      background: var(--pill);
+      color: var(--accent2);
+      text-decoration: none;
+    }
+    .nav a.active .dot{
+      background: var(--accent);
+      border-color: rgba(14,165,233,0.25);
+      box-shadow: 0 0 0 6px rgba(14,165,233,0.10);
+    }
+
+    /* Main */
+    .main{
+      min-width: 0;
+    }
+
+    .topbar{
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+      margin-top: 6px;
+      margin-bottom: 18px;
+    }
+    
+.logoSwap{
+  position: relative;
+  display: inline-block;
+  height: 68px;     /* keep overall cell height */
+  width: 160px;     /* keeps layout stable */
+}
+
+/* Light logo keeps full size */
+.logoSwap .logoLight{
+  position: absolute;
+  inset: 0;
+  height: 90px;
+  width: 160px;
+  object-fit: contain;
+  object-position: left center;
+  display: block;
+}
+
+/* Dark logo smaller */
+.logoSwap .logoDark{
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 28px;     /* smaller than light */
+  width: auto;
+  object-fit: contain;
+  object-position: left center;
+  display: none;
+}
+
+[data-theme="dark"] .logoSwap .logoLight{ display: none; }
+[data-theme="dark"] .logoSwap .logoDark{ display: block; }
+        .hero{
+          display: grid;
+          grid-template-columns: 78px 1fr;
+          gap: 16px;
+          align-items: center;
+        }
+
+    .avatar{
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(14,165,233,0.25), rgba(34,211,238,0.18));
+      border: 3px solid rgba(14,165,233,0.55);
+      box-shadow: 0 14px 30px rgba(14,165,233,0.14);
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: var(--accent2);
+    }
+
+    .avatar img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    h1{
+      margin: 0;
+      font-size: 44px;
+      line-height: 1.03;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle{
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+    .subtitle b{
+      color: var(--accent2);
+      font-weight: 400;
+    }
+
+    .btnRow{
+      display: flex;
+      flex-wrap: nowrap;     /* key change */
+      gap: 10px;
+      margin-top: 16px;
+      align-items: center;
+      overflow-x: auto;      /* lets it scroll if it doesn't fit */
+      padding-bottom: 6px;   /* space so scrollbar doesn't touch buttons */
+    }
+
+    .pillBtn{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.62);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.04);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    [data-theme="dark"] .pillBtn{
+      background: rgba(11,21,38,0.62);
+    }
+
+    .pillBtn:hover{
+      transform: translateY(-1px);
+      transition: 120ms ease;
+      text-decoration: none;
+    }
+
+    .icon{
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+    }
+
+    .themeBtn{
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.70);
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+    }
+    [data-theme="dark"] .themeBtn{ background: rgba(11,21,38,0.72); }
+
+    .section{
+      margin-top: 26px;
+      padding-top: 8px;
+    }
+
+    .sectionTitle{
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(100,116,139,0.9);
+      font-weight: 900;
+      padding: 20px 0 10px;
+      border-bottom: 1px solid rgba(230,238,247,0.75);
+    }
+    [data-theme="dark"] .sectionTitle{ border-bottom-color: rgba(148,163,184,0.14); }
+
+    .card{
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: 0 16px 26px rgba(15, 23, 42, 0.04);
+      padding: 18px 18px;
+    }
+
+.row{
+  display: grid;
+  grid-template-columns: var(--logoCol, 120px) 1fr auto;
+  gap: 14px;
+  align-items: center;
+}
+
+    .logoBox{
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(148,163,184,0.12);
+      border: 1px solid rgba(148,163,184,0.22);
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      color: rgba(100,116,139,0.9);
+    }
+          .logoBox img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;   /* key change */
+        padding: 6px;          /* gives breathing room */
+        display: block;
+      }
+
+    .row h3{
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+    }
+
+    .meta{
+      margin-top: 4px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .date{
+      color: rgba(100,116,139,0.9);
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .awardTop{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .chip{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--chip);
+      color: var(--chipText);
+      border: 1px solid rgba(2,132,199,0.18);
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .awardGrid{
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .awardRight{
+      text-align: right;
+      color: rgba(100,116,139,0.9);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 12px;
+      padding-top: 8px;
+    }
+
+    .awardName{
+      font-size: 22px;
+      margin: 0 0 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .awardOrg{
+      margin: 0;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .awardBuild{
+      margin-top: 10px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .awardBuild a{
+      color: var(--accent2);
+      font-weight: 900;
+      background: rgba(14,165,233,0.10);
+      padding: 2px 6px;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+        .fakeLink{
+      color: var(--accent2);
+      font-weight: 900;
+      background: rgba(14,165,233,0.10);
+      padding: 2px 6px;
+      border-radius: 8px;
+    }
+
+    .skillsGrid{
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .skillsCard .kTitle{
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(100,116,139,0.95);
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    .tags{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag{
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.62);
+      font-weight: 800;
+      font-size: 13px;
+    }
+    [data-theme="dark"] .tag{
+      background: rgba(11,21,38,0.62);
+    }
+
+    .footerNote{
+      margin-top: 28px;
+      color: rgba(100,116,139,0.88);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+          .logoCell{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      /* default for most logos */
+.companyLogo{
+  height: 44px;
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
+  object-position: left center;
+  display: block;
+}
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .layout{ grid-template-columns: 1fr; }
+      .side{
+        position: static;
+        padding: 0;
+      }
+      .nav{
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .nav::before{ display: none; }
+      .nav a{ grid-template-columns: 22px 1fr; padding: 10px 12px; }
+      .dot{ margin-left: 0; }
+      h1{ font-size: 40px; }
+      .skillsGrid{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body data-theme="light">
+  <div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="side">
+      <ul class="nav" id="sideNav">
+        <li><a href="#experience" class="active"><span class="dot"></span><span>Experience</span></a></li>
+        <li><a href="#awards"><span class="dot"></span><span>Awards</span></a></li>
+        <li><a href="#projects"><span class="dot"></span><span>Projects</span></a></li>
+        <li><a href="#volunteer"><span class="dot"></span><span>Volunteer</span></a></li>
+        <li><a href="#skills"><span class="dot"></span><span>Skills</span></a></li>
+      </ul>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+
+      <div class="topbar">
+        <div>
+          <div class="hero">
+            <div class="avatar" title="Neha">
+              <img src="Neha%20Hariharaprasad%20pic.jpg" alt="Neha Hariharaprasad" />
+            </div>
+            <!-- rest of hero -->
+                 
+
+            <div>
+              <h1>Neha Hariharaprasad</h1>
+              <div class="subtitle">
+                16 y/o <b>student building tech for impact</b> · <b>2x Congressional App Challenge winner</b>
+              </div>
+
+              <div class="btnRow">
+                <a class="pillBtn" href="#about" aria-label="About me">
+                  <span class="icon">👤</span> About Me
+                </a>
+                <a class="pillBtn" href="mailto:neha.hhp@gmail.com">
+                  <span class="icon">✉️</span> email
+                </a>
+                <a class="pillBtn" href="https://github.com/nehahhp" target="_blank" rel="noreferrer">
+                  <span class="icon">🐙</span> github
+                </a>
+                <a class="pillBtn" href="https://www.linkedin.com/in/nehahhp/" target="_blank" rel="noreferrer">
+                  <span class="icon">in</span> linkedin
+                </a>
+                <a class="pillBtn" href="https://www.youtube.com/@nehacongressionalapp" target="_blank" rel="noreferrer">
+                  <span class="icon">▶︎</span> youtube
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="themeBtn" id="themeBtn" aria-label="Toggle theme" title="Toggle theme">
+          🌙
+        </button>
+      </div>
+
+      <!-- About (optional anchor for About Me button) -->
+      <section class="section" id="about">
+        <div class="sectionTitle">About</div>
+        <div class="card">
+          <div style="color: var(--muted); font-weight: 400; font-size: 15px; line-height: 1.65;">
+            I’m a San Antonio high school student focused on using software to improve daily life in my community. As a 2x Congressional App Challenge winner (TX-20), I’ve built and shipped apps in education, language learning, and health. I’m looking to keep building stronger products and learn from teams working on meaningful problems.
+          </div>
+        </div>
+      </section>
+
+<!-- Experience -->
+<section class="section" id="experience">
+  <div class="sectionTitle">Experience</div>
+
+  <div class="card">
+    <div class="row">
+<div class="logoCell">
+  <span class="logoSwap">
+    <img class="companyLogo logoLight" src="icode.webp" alt="iCode logo" />
+    <img class="companyLogo logoDark"  src="icodedark.webp" alt="iCode logo" />
+  </span>
+</div>
+
+      <div>
+        <h3>iCode Stone Oak</h3>
+        <div class="meta">Youngest Instructor, Coding &amp; STEAM (Paid)</div>
+      </div>
+
+      <div class="date">May 2025 - Aug 2025</div>
+    </div>
+
+    <div style="margin-top:10px; color: var(--muted); font-weight:400; font-size:15px; line-height:1.65;">
+      Taught Scratch, Python, and robotics through hands-on projects. Supported students 1:1 and helped adapt lessons across ages and skill levels.
+    </div>
+  </div>
+
+  <div class="card">
+  <div class="row">
+    <div class="logoCell">
+      <img class="companyLogo" src="gwc.png" alt="Girls Who Code logo" style="height:40px; max-width:110px;" />
+    </div>
+
+    <div>
+      <h3>Girls Who Code</h3>
+      <div class="meta">Web Design for Social Good</div>
+    </div>
+
+    <div class="date">Summer 2025</div>
+  </div>
+
+  <div style="margin-top:10px; color: var(--muted); font-weight:400; font-size:15px; line-height:1.65;">
+    Project-based work in user-centered design and accessibility. Built a social-impact web project focused on real user needs.
+  </div>
+</div>
+  <div class="card">
+  <div class="row">
+    <div class="logoCell">
+  <img class="companyLogo" src="ut.png" alt="UT Austin logo" style="height:44px; max-width:110px;" />
+    </div>
+
+    <div>
+      <h3>UT Austin Academy for iOS App Development</h3>
+      <div class="meta">Residential iOS Program (Swift, SwiftUI, UI/UX)</div>
+    </div>
+
+    <div class="date">Summer 2024</div>
+  </div>
+
+  <div style="margin-top:10px; color: var(--muted); font-weight:400; font-size:15px; line-height:1.65;">
+    Built an iOS STEM app end-to-end and strengthened mobile product skills in SwiftUI, UI/UX, and app functionality.
+  </div>
+</div>
+     <!-- Awards -->
+<section class="section" id="awards">
+  <div class="sectionTitle">Awards + Recognition</div>
+
+  <!-- 2025 Congressional App Challenge -->
+  <div class="card">
+    <div class="awardTop">
+      <span class="chip">🏆 Winner</span>
+      <span class="chip">Congressional App Challenge (TX-20)</span>
+    </div>
+
+    <div class="awardGrid">
+      <div>
+        <p class="awardName">2025 Congressional App Challenge Winner</p>
+        <p class="awardOrg">TX-20 · San Antonio</p>
+        <div class="awardBuild">
+          built
+          <a href="https://globalingo.replit.app/" target="_blank" rel="noreferrer">GlobaLingo ↗</a>
+          · AI-assisted language learning for Afghan immigrants
+        </div>
+      </div>
+
+      <div class="awardRight">2025</div>
+    </div>
+  </div>
+
+  <!-- 2024 Congressional App Challenge -->
+  <div class="card">
+    <div class="awardTop">
+      <span class="chip">🏆 Winner</span>
+      <span class="chip">Congressional App Challenge (TX-20)</span>
+      <span class="chip">Selected for U.S. Capitol display</span>
+    </div>
+
+    <div class="awardGrid">
+      <div>
+        <p class="awardName">2024 Congressional App Challenge Winner</p>
+        <p class="awardOrg">Honored by Congressman Joaquin Castro</p>
+        <div class="awardBuild">
+          built
+          <a href="https://eczemaease.replit.app/" target="_blank" rel="noreferrer">Eczema Ease ↗</a>
+          · eczema education and symptom tracking
+        </div>
+      </div>
+
+      <div class="awardRight">2024</div>
+    </div>
+  </div>
+
+  <!-- Press -->
+<div class="card">
+  <div class="awardTop">
+    <span class="chip">📰 Featured</span>
+    <span class="chip">San Antonio Express-News</span>
+  </div>
+
+  <div class="awardGrid">
+    <div>
+      <p class="awardName">Featured for Eczema Ease</p>
+      <p class="awardOrg">Local press recognition for community impact</p>
+      <div class="awardBuild">
+        story:
+        <a href="https://www.expressnews.com/news/education/article/san-antonio-teenager-wins-congressional-app-20002150.php" target="_blank" rel="noreferrer">read the feature ↗</a>
+      </div>
+    </div>
+
+    <div class="awardRight">2024</div>
+  </div>
+</div>
+
+  <!-- 2023 Shooting Stars Foundation Hackathon -->
+  <div class="card">
+    <div class="awardTop">
+      <span class="chip">🥇 Winner</span>
+      <span class="chip">Shooting Stars Foundation Hackathon</span>
+    </div>
+
+    <div class="awardGrid">
+      <div>
+        <p class="awardName">Hackathon Winner</p>
+        <p class="awardOrg">Built with a team · rapid iteration and debugging</p>
+        <div class="awardBuild">
+          built <span class="fakeLink">PlanIt</span>
+          · a web app to improve focus and reduce distractions
+        </div>
+      </div>
+
+      <div class="awardRight">2023</div>
+    </div>
+  </div>
+
+
+</section>
+
+      <!-- Projects (with Publications inside) -->
+<section class="section" id="projects">
+  <div class="sectionTitle">Projects</div>
+
+  <!-- Apps + Websites -->
+  <div style="margin: 10px 0 12px; font-size:12px; letter-spacing:0.26em; font-weight:900; color: var(--muted); text-transform: uppercase;">
+    Apps + Websites
+  </div>
+
+  <div class="card">
+    <div class="awardGrid">
+      <div>
+        <p class="awardName">One Resolution Tracker</p>
+        <p class="awardOrg">iOS App</p>
+        <div class="awardBuild">
+          App Store app for tracking a single resolution daily with a clean, simple year view.
+          <a href="https://apps.apple.com/us/app/one-resolution-tracker/id6757410623" target="_blank" rel="noreferrer">open ↗</a>
+        </div>
+      </div>
+      <div class="awardRight">2026</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="awardGrid">
+      <div>
+        <p class="awardName">GlobaLingo</p>
+        <p class="awardOrg">Web App</p>
+        <div class="awardBuild">
+          AI-assisted language learning for Afghan immigrants with Dari/Pashto support and practical English practice.
+          <a href="https://globalingo.replit.app/" target="_blank" rel="noreferrer">open ↗</a>
+        </div>
+      </div>
+      <div class="awardRight">2025</div>
+    </div>
+  </div>
+
+
+
+  <div class="card">
+    <div class="awardGrid">
+      <div>
+        <p class="awardName">HSPlanner</p>
+        <p class="awardOrg">Web App</p>
+        <div class="awardBuild">
+          Academic planning platform to track courses, GPA, tests, activities, and college goals in one place.
+          <a href="https://hsplanner.com" target="_blank" rel="noreferrer">open ↗</a>
+        </div>
+      </div>
+      <div class="awardRight">2025</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="awardGrid">
+      <div>
+        <p class="awardName">SATWords</p>
+        <p class="awardOrg">Web App</p>
+        <div class="awardBuild">
+          Interactive SAT vocabulary practice with quizzes and instant feedback to improve recall.
+          <a href="https://satwords.replit.app/" target="_blank" rel="noreferrer">open ↗</a>
+        </div>
+      </div>
+      <div class="awardRight">2025</div>
+    </div>
+  </div>
+
+<div class="card">
+  <div class="awardGrid">
+    <div>
+      <p class="awardName">Unit Circle Quiz</p>
+      <p class="awardOrg">Web App</p>
+      <div class="awardBuild">
+        Interactive unit circle practice game for angles, coordinates, and trig values with guided modes, immediate feedback, and flexible input (drag-and-drop or typed).
+        <a href="https://unitcircle.replit.app/" target="_blank" rel="noreferrer">open ↗</a>
+      </div>
+    </div>
+    <div class="awardRight">2025</div>
+  </div>
+</div>
+
+  <div class="card">
+    <div class="awardGrid">
+      <div>
+        <p class="awardName">Physics1AP</p>
+        <p class="awardOrg">Web App</p>
+        <div class="awardBuild">
+          AP Physics 1 practice site with topic-based questions and immediate feedback for self-study.
+          <a href="https://physics1quiz.replit.app/" target="_blank" rel="noreferrer">open ↗</a>
+        </div>
+      </div>
+      <div class="awardRight">2025</div>
+    </div>
+  </div>
+
+
+
+  <div class="card">
+    <div class="awardGrid">
+      <div>
+        <p class="awardName">Eczema Ease</p>
+        <p class="awardOrg">iOS + Web App</p>
+        <div class="awardBuild">
+          Eczema education and symptom tracking to help users spot patterns and manage flare-ups.
+          <a href="https://eczemaease.replit.app/" target="_blank" rel="noreferrer">open ↗</a>
+        </div>
+      </div>
+      <div class="awardRight">2024</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="awardGrid">
+      <div>
+        <p class="awardName">PlanIt</p>
+        <p class="awardOrg">Hackathon Project</p>
+        <div class="awardBuild">
+          Hackathon-winning web app focused on planning and reducing distractions.
+          
+        </div>
+      </div>
+      <div class="awardRight">2023</div>
+    </div>
+  </div>
+
+  <!-- Publications -->
+  <div style="margin: 18px 0 12px; font-size:12px; letter-spacing:0.26em; font-weight:900; color: var(--muted); text-transform: uppercase;">
+    Publications
+  </div>
+
+  <div class="card">
+    <div class="awardTop">
+      <span class="chip">Amazon KDP</span>
+      <span class="chip">Top 25 Paid Books (Internship)</span>
+    </div>
+
+    <div class="awardGrid">
+      <div>
+        <p class="awardName">Becoming an Actuary: A Practical Guide for Students</p>
+        <p class="awardOrg">Book</p>
+        <div class="awardBuild">
+          A student-friendly guide to the actuary path, from coursework and exams to careers and salaries.
+          <a href="https://a.co/d/bncu8yP" target="_blank" rel="noreferrer">open ↗</a>
+        </div>
+      </div>
+      <div class="awardRight">2025</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="awardGrid">
+      <div>
+        <p class="awardName">AI Curriculum</p>
+        <p class="awardOrg">Curriculum</p>
+        <div class="awardBuild">
+          Four-year high school AI curriculum with lessons and projects.
+          <a href="https://nehahhp.wixsite.com/aicourse" target="_blank" rel="noreferrer">open ↗</a>
+        </div>
+      </div>
+      <div class="awardRight">2025</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="awardGrid">
+      <div>
+        <p class="awardName">Smore Newsletter: College Newsletters</p>
+        <p class="awardOrg">Newsletter</p>
+        <div class="awardBuild">
+          Curated list of official student-run newspapers and newsletters from Ivy League and top Texas universities.
+          <a href="https://app.smore.com/n/z28nf-college-newsletters" target="_blank" rel="noreferrer">open ↗</a>
+        </div>
+      </div>
+      <div class="awardRight">2025</div>
+    </div>
+  </div>
+</section>
+
+      <!-- Volunteer -->
+      <section class="section" id="volunteer">
+        <div class="sectionTitle">Volunteer</div>
+
+        <div class="card">
+          <div class="row" style="grid-template-columns: 1fr auto;">
+            <div>
+              <h3>Food Bank</h3>
+              <div class="meta">Volunteer</div>
+            </div>
+            <div class="date">Jun 2022 - Present</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section class="section" id="skills">
+        <div class="sectionTitle">Skills</div>
+
+        <div class="skillsGrid">
+          <div class="card skillsCard">
+            <div class="kTitle">Languages</div>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">Java</span>
+              <span class="tag">Swift</span>
+              <span class="tag">SwiftUI</span>
+              <span class="tag">iOS Development</span>
+              
+              <span class="tag">Scratch</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">HTML/CSS</span>
+
+            </div>
+          </div>
+
+          <div class="card skillsCard">
+            <div class="kTitle">Tools / Workflow</div>
+            <div class="tags">
+              <span class="tag">App Store Publishing</span>
+              <span class="tag">Xcode</span>
+              <span class="tag">Replit</span>
+              <span class="tag">Sublime Text</span>
+              <span class="tag">Git/GitHub</span>
+              <span class="tag">Rapid Prototyping</span>
+            </div>
+          </div>
+
+          <div class="card skillsCard">
+            <div class="kTitle">AI Assisted Coding</div>
+            <div class="tags">
+              <span class="tag">ChatGPT</span>
+              <span class="tag">Replit Agent</span>
+              <span class="tag">AI Prompting</span>
+              <span class="tag">AI Debugging</span>
+              <span class="tag">Code Review with AI</span>
+            </div>
+          </div>
+
+          
+
+        <div class="footerNote">
+          Last updated Jan 2026
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    // Theme toggle
+    const themeBtn = document.getElementById('themeBtn');
+    const root = document.body;
+
+    function setTheme(next){
+      root.setAttribute('data-theme', next);
+      themeBtn.textContent = (next === 'dark') ? '☀️' : '🌙';
+      localStorage.setItem('theme', next);
+    }
+
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark' || saved === 'light') setTheme(saved);
+
+    themeBtn.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      setTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    // Active section highlight in side nav
+    const navLinks = Array.from(document.querySelectorAll('#sideNav a'));
+    const sections = navLinks
+      .map(a => document.querySelector(a.getAttribute('href')))
+      .filter(Boolean);
+
+    const obs = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+      if (!visible) return;
+
+      const id = '#' + visible.target.id;
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === id));
+    }, { root: null, threshold: [0.2, 0.35, 0.5, 0.7] });
+
+    sections.forEach(s => obs.observe(s));
+  </script>
+</body>
+</html>
