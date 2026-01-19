@@ -489,6 +489,70 @@
       h1{ font-size: 40px; }
       .skillsGrid{ grid-template-columns: 1fr; }
     }
+
+    /* =========================
+   Mobile (iPhone) fixes
+   ========================= */
+@media (max-width: 900px){
+
+  /* Turn 2-col layout into 1-col */
+  .layout{
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    padding: 16px 14px 60px !important;
+  }
+
+  /* Make the left nav not sticky/wide */
+  .nav{
+    position: relative !important;
+    top: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Make the nav look like a horizontal “quick menu” */
+  .nav ul{
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+
+  /* Hero/top section should stack */
+  .topbar{
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  h1{
+    font-size: 34px !important;
+    line-height: 1.06 !important;
+  }
+
+  .subtitle{
+    font-size: 16px !important;
+  }
+
+  /* Buttons row wraps */
+  .btnRow{
+    flex-wrap: wrap !important;
+    overflow-x: visible !important;
+  }
+
+  /* Experience “row” should not force 3 columns */
+  .row{
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .date{
+    justify-self: start !important;
+  }
+
+  /* Skills should become 1 column */
+  .skillsGrid{
+    grid-template-columns: 1fr !important;
+  }
+}
   </style>
 </head>
 
